@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Header from './Header.svelte'
 	import Three from './Three.svelte'
-	import Tests from './Tests.svelte'
 
 	let pfp_url = "";
 	let pfp_name = "test alt";
 </script>
 
 <main>
-	<Tests {pfp_url} {pfp_name}/>
+	<Header {pfp_url} {pfp_name}/>
 	<Three/>
 </main>
 

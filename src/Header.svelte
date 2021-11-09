@@ -1,66 +1,49 @@
+<script lang="ts">
+    export let pfp_url: string;
+    export let pfp_name: string;
+</script>
+
 <main>
-    <div id="title">
+    <span id="title">
         <img alt="Alternexus title"/>
-    </div>
-    <div id="header">
-        <div>El 1</div>
-        <div>El 2</div>
-        <div>El 3</div>
-    </div>
-    <div id="pfp"></div>
+    </span>
+    <span id=header>
+        test
+    </span>
+    <span id="pfp" src={pfp_url}>
+        <img alt="{pfp_name}"/>
+    </span>
 </main>
 
 <style>
     main {
-        position: fixed;
-        height: 100%;
         width: 100%;
-        left: 0px;
-        top: 0px;
-        background-color: black;
-    }
-
-    #header {
-        /* display & sizes */
-        left: 12vw;
-        top: 0px;
-        display: flex;
-        height: 7vh;
-        width: calc(88vw - 15vh);
-        margin: 0px;
-        position: fixed;
-        /* flex */
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        /* other */
-        background-color: #001f3f;
-    }
-
-    #header * {
-        color: white;
-        background-color: rgba(255, 255, 255, 0.151);
-    }
-
-    #pfp {
-        /* flex */
-        justify-self: flex-start;
-        /* height ratio and position */
         height: 15vh;
-        aspect-ratio: 1/1;
-        position: fixed;
+        left: 0;
         top: 0;
-        right: 0;
-
-        background-color: #001f3f;
-        border-bottom-left-radius: 10%;
+        position: fixed;
     }
 
     #title {
-        display: block;
-        width: 12vw;
+        float: left;
+        height: 12vh;
         aspect-ratio: 16/9;
-        background-color: #001f3f;
-        border-bottom-right-radius: 1.2vh;
+        background-color: #001219;
+        position: relative;
+    }
+
+    #header {
+        float: left;
+        display: flex;
+        width: calc(100vw - 12vh*16/9 - 15vh);
+        height: 7vh;
+        background-color: #001219;
+    }
+
+    #pfp {
+        float: right;
+        height: 15vh;
+        aspect-ratio: 1/1;
+        background-color: #001219;
     }
 </style>
