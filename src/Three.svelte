@@ -1,54 +1,43 @@
 <script lang="ts">
-  import { claim_component } from "svelte/internal";
+  import * as T from "three";
 
-  import {
-    AmbientLight,
-    BoxBufferGeometry,
-    Canvas,
-    DirectionalLight,
-    GridHelper,
-    Mesh,
-    MeshStandardMaterial,
-    PerspectiveCamera,
-    Scene,
-    WebGLRenderer,
-  } from "svelthree";
+  let camera: T.PerspectiveCamera, scene: T.Scene, renderer: T.WebGLRenderer;
+  let geometry: T.BoxGeometry, material: T.MeshNormalMaterial, mesh: T.Mesh;
 
-  let cubeGeometry = new BoxBufferGeometry(1, 1, 1);
-  let cubeMaterial = new MeshStandardMaterial();
+  init();
 
-  let innerHeight: number, innerWidth: number;
+  function init() {
+    camera = new T.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      10
+    );
+    camera.position.z = 1;
 
-  $: innerWidth = 0;
-  $: innerHeight = 0;
+    scene = new T.Scene();
 
-  const grid = new GridHelper(200, 50);
+    geometry = new T.BoxGeometry(0.2, 0.2, 0.2);
+    material = new T.MeshNormalMaterial();
+
+    mesh = new T.Mesh(geometry, material);
+    scene.add(mesh);
+
+    renderer = new T.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setAnimationLoop(animate);
+    document.body.appendChild(renderer.domElement);
+  }
+
+  function animate(time) {
+    mesh.rotation.x = time / 2000;
+    mesh.rotation.y = time / 1000;
+
+    renderer.render(scene, camera);
+  }
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
-
-<main>
-<Canvas let:sti w={1300} h={500}>
-  <Scene {sti} let:scene id="scene1" props={{ background: 0x000000 }}>
-    <PerspectiveCamera {scene} id="cam1" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
-    <AmbientLight {scene} intensity={1.25} />
-    <DirectionalLight {scene} pos={[3, 3, 3]} />
-    <Mesh
-      {scene}
-      geometry={cubeGeometry}
-      material={cubeMaterial}
-      mat={{ roughness: 0.5, metalness: 0.5, color: 0xffffff }}
-      pos={[0, 0, 0]}
-      rot={[0.5, 0.6, 0]}
-      scale={[1, 1, 1]}/> 
-  </Scene>
-  <WebGLRenderer
-    {sti}
-    sceneId="scene1"
-    camId="cam1"
-    config={{ antialias: true, alpha: false }}
-  />
-</Canvas>
+<main class="canvas">
 </main>
 
 <style>
@@ -61,7 +50,7 @@
     width: 100vw;
     margin: 0;
     padding: 0;
-    color: #7FDBFF;
+    color: #7fdbff;
     overflow: hidden;
   }
 </style>
